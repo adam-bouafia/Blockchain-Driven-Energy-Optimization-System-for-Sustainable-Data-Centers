@@ -1,0 +1,42 @@
+{
+  "name": "blockchain-energy-optimization",
+  "version": "1.0.0",
+  "description": "Blockchain-ML hybrid system for data center energy optimization",
+  "main": "truffle-config.js",
+  "scripts": {
+    "test": "truffle test",
+    "compile": "truffle compile",
+    "migrate": "truffle migrate",
+    "ganache": "ganache-cli",
+    "lint": "solhint \"contracts/**/*.sol\"",
+    "coverage": "truffle run coverage",
+    "ml-setup": "cd ml && pip install -r requirements.txt",
+    "frontend": "cd frontend && npm start"
+  },
+  "keywords": [
+    "blockchain",
+    "ethereum",
+    "energy",
+    "optimization",
+    "data-center",
+    "zk-snark",
+    "machine-learning"
+  ],
+  "author": "Adam Bouafia",
+  "license": "MIT",
+  "dependencies": {
+    "@chainlink/contracts": "^0.6.1",
+    "@openzeppelin/contracts": "^4.8.2",
+    "ethers": "^5.7.2",
+    "web3": "^1.9.0"
+  },
+  "devDependencies": {
+    "@truffle/hdwallet-provider": "^2.1.9",
+    "dotenv": "^16.0.3",
+    "eth-gas-reporter": "^0.2.25",
+    "ganache-cli": "^6.12.2",
+    "solhint": "^3.4.1",
+    "solidity-coverage": "^0.8.2",
+    "truffle": "^5.8.1"
+  }
+}
