@@ -40,7 +40,7 @@ blockchain-energy-optimization/
 
 - Node.js (v16+)
 - npm (v8+)
-- Python 3.8+
+- Python 3.8+ (Python 3.12 recommended for best compatibility)
 - Truffle Suite
 - Ganache CLI
 
@@ -81,6 +81,43 @@ blockchain-energy-optimization/
    ```bash
    truffle test
    ```
+
+7. Alternatively, run the demo script (recommended):
+   ```bash
+   ./scripts/run_demo.sh
+   ```
+   This script will:
+   - Start a local blockchain
+   - Deploy all contracts
+   - Set up the Python environment if needed
+   - Run the ML component
+   - Interact with the contracts
+
+## Python 3.12 Compatibility
+
+This project now supports Python 3.12 with the following features:
+
+1. **Automatic Environment Setup**:
+   ```bash
+   cd ml
+   python3.12 -m venv venv312
+   source venv312/bin/activate
+   pip install -r requirements.txt
+   ```
+
+2. **Self-contained ML Component**:
+   The `run_ml_component.sh` script now automatically:
+   - Creates a Python 3.12 virtual environment if it doesn't exist
+   - Installs all required dependencies
+   - Runs the ML component with the correct environment
+
+3. **Compatible Package Versions**:
+   - numpy==1.26.4
+   - tensorflow==2.19.0
+   - pandas==2.2.1
+   - scikit-learn==1.4.2
+   - matplotlib==3.8.3
+   - web3==6.15.1
 
 ## Core Components
 
@@ -123,3 +160,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - Prof. Klervie Toczé, Vrije Universiteit Amsterdam
 - Green Lab HPC resources
+

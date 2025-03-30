@@ -1,3 +1,18 @@
+#!/bin/bash
+
+# This script tests the fixed repository code
+
+echo "Testing the fixed repository code..."
+
+# Create a test directory
+mkdir -p /tmp/blockchain-energy-test
+cd /tmp/blockchain-energy-test
+
+# Create the necessary directory structure
+mkdir -p contracts/energy contracts/incentives contracts/oracle ml/profiler scripts
+
+# Copy the fixed WorkloadOracle.sol
+cat > contracts/oracle/WorkloadOracle.sol << 'EOL'
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -194,3 +209,75 @@ contract WorkloadOracle is ChainlinkClient, Ownable {
         return string(bstr);
     }
 }
+EOL
+
+# Create a simple Python test script for ML component
+cat > ml/profiler/test_imports.py << 'EOL'
+#!/usr/bin/env python3
+
+try:
+    print("Testing numpy import...")
+    import numpy as np
+    print("✓ Numpy imported successfully")
+    
+    print("Testing TensorFlow import...")
+    import tensorflow as tf
+    print(f"✓ TensorFlow {tf.__version__} imported successfully")
+    
+    print("Testing pandas import...")
+    import pandas as pd
+    print("✓ Pandas imported successfully")
+    
+    print("Testing scikit-learn import...")
+    import sklearn
+    print("✓ Scikit-learn imported successfully")
+    
+    print("Testing matplotlib import...")
+    import matplotlib.pyplot as plt
+    print("✓ Matplotlib imported successfully")
+    
+    print("Testing web3 import...")
+    import web3
+    print("✓ Web3 imported successfully")
+    
+    print("\nAll imports successful! The Python environment is correctly configured.")
+except ImportError as e:
+    print(f"❌ Import error: {e}")
+    print("\nPlease install the missing dependencies with: pip install -r requirements.txt")
+EOL
+
+# Create requirements.txt
+cat > requirements.txt << 'EOL'
+numpy==1.26.4
+tensorflow==2.16.1
+pandas==2.2.1
+scikit-learn==1.4.1
+matplotlib==3.8.3
+web3==6.15.1
+EOL
+
+# Create a simple test script
+cat > test_repository.sh << 'EOL'
+#!/bin/bash
+
+echo "Testing repository fixes..."
+
+# Test Python imports
+echo "Testing Python dependencies..."
+python3 ml/profiler/test_imports.py
+
+# Test Solidity compilation
+echo -e "\nTesting Solidity compilation..."
+if command -v solc &> /dev/null; then
+    solc --version
+    solc --optimize --bin contracts/oracle/WorkloadOracle.sol 2>&1 | grep -q "Binary:" && echo "✓ Solidity compilation successful" || echo "❌ Solidity compilation failed"
+else
+    echo "❌ Solidity compiler not found. Install with: npm install -g solc"
+fi
+
+echo -e "\nTest completed!"
+EOL
+
+chmod +x test_repository.sh
+
+echo "Test environment setup complete. Run ./test_repository.sh to test the fixes."

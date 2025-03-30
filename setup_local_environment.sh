@@ -55,9 +55,9 @@ EOL
 # Set up Python environment for ML components
 echo "Setting up Python environment for ML components..."
 cd ml
-python3 -m venv venv
+python3.12 -m venv venv
 source venv/bin/activate
-pip install tensorflow numpy pandas matplotlib web3
+pip install -r requirements.txt
 deactivate
 cd ..
 
@@ -66,11 +66,11 @@ echo "Creating requirements.txt for ML components..."
 cat > ml/requirements.txt << EOL
 tensorflow==2.11.0
 tensorflow-lite==2.11.0
+tflite-runtime==2.11.0
 numpy==1.23.5
 pandas==1.5.3
 matplotlib==3.7.1
 web3==6.0.0
-chainlink-contracts==0.6.1
 EOL
 
 # Create sample ML profiler script
