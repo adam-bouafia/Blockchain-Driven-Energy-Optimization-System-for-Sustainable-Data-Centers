@@ -180,8 +180,3 @@ For HPC deployment, additional configuration is provided in the `scripts/hpc_dep
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- Prof. Klervie Toczé, Vrije Universiteit Amsterdam
-- Green Lab HPC resources
