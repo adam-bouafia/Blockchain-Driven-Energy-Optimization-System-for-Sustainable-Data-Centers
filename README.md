@@ -14,6 +14,7 @@ Our solution combines:
 - SHA-3 hashed energy logging with zk-SNARK verification
 - ERC-1155 multi-token incentive system
 - Hybrid Prophet-Transformer forecasting model for energy load optimization
+- React-based dashboard with comprehensive visualizations and blockchain integration
 
 ## Repository Structure
 
@@ -30,7 +31,13 @@ blockchain-energy-optimization/
 │   └── federated/           # Federated learning implementation
 ├── frontend/                # React.js dashboard
 │   ├── public/              # Static assets
-│   └── src/                 # React components
+│   ├── src/                 # React components
+│   │   ├── components/      # Reusable UI components
+│   │   ├── pages/           # Page components
+│   │   ├── contexts/        # React contexts
+│   │   ├── utils/           # Utility functions
+│   │   └── contracts/       # Smart contract ABIs
+│   └── build/               # Production build (generated)
 └── scripts/                 # Utility scripts
 ```
 
@@ -43,12 +50,13 @@ blockchain-energy-optimization/
 - Python 3.8+ (Python 3.12 recommended for best compatibility)
 - Truffle Suite
 - Ganache CLI
+- MetaMask or other Web3 wallet for blockchain interaction
 
 ### Installation
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/blockchain-energy-optimization.git
+   git clone https://github.com/adam-bouafia/Blockchain-Driven-Energy-Optimization-System-for-Sustainable-Data-Centers.git
    cd blockchain-energy-optimization
    ```
 
@@ -82,7 +90,18 @@ blockchain-energy-optimization/
    truffle test
    ```
 
-7. Alternatively, run the demo script (recommended):
+7. Set up the frontend:
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+8. Start the frontend development server:
+   ```bash
+   npm start
+   ```
+
+9. Alternatively, run the demo script (recommended):
    ```bash
    ./scripts/run_demo.sh
    ```
@@ -95,7 +114,7 @@ blockchain-energy-optimization/
 
 ## Python 3.12 Compatibility
 
-This project now supports Python 3.12 with the following features:
+This project supports Python 3.12 with the following features:
 
 1. **Automatic Environment Setup**:
    ```bash
@@ -106,7 +125,7 @@ This project now supports Python 3.12 with the following features:
    ```
 
 2. **Self-contained ML Component**:
-   The `run_ml_component.sh` script now automatically:
+   The `run_ml_component.sh` script automatically:
    - Creates a Python 3.12 virtual environment if it doesn't exist
    - Installs all required dependencies
    - Runs the ML component with the correct environment
@@ -144,6 +163,15 @@ function calculateReward(address operator) public view returns (uint256) {
 
 Automated workload redistribution is triggered through Chainlink oracles when efficiency thresholds are crossed, targeting 15% cooling load reduction without violating SLA thresholds.
 
+### Interactive Dashboard
+
+The frontend dashboard provides:
+- Energy consumption monitoring with historical trends
+- Token distribution and management interface
+- Node status visualization with real-time updates
+- Smart contract interaction capabilities
+- Wallet integration for blockchain transactions
+
 ## HPC Deployment
 
 For HPC deployment, additional configuration is provided in the `scripts/hpc_deploy.sh` file. This script handles:
@@ -155,9 +183,3 @@ For HPC deployment, additional configuration is provided in the `scripts/hpc_dep
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- Prof. Klervie Toczé, Vrije Universiteit Amsterdam
-- Green Lab HPC resources
-

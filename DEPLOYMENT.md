@@ -11,11 +11,12 @@ This document provides detailed instructions for deploying the Blockchain-Based 
 - **npm**: v8.0.0 or higher
 - **Python**: v3.8 or higher
 - **Git**: Latest version
+- **MetaMask**: Browser extension for Ethereum wallet
 
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/blockchain-energy-optimization.git
+git clone https://github.com/adam-bouafia/Blockchain-Driven-Energy-Optimization-System-for-Sustainable-Data-Centers.git
 cd blockchain-energy-optimization
 ```
 
@@ -69,7 +70,35 @@ This will:
 - Prepare blockchain-ready data
 - Generate a visualization of the predictions
 
-### Step 6: Interact with Deployed Contracts
+### Step 6: Set Up the Frontend
+
+Navigate to the frontend directory and install dependencies:
+
+```bash
+cd frontend
+npm install
+```
+
+Update the contract addresses in the frontend configuration:
+
+1. Open `src/utils/contractService.js`
+2. Update the `CONTRACT_ADDRESSES` object with your deployed contract addresses:
+   ```javascript
+   const CONTRACT_ADDRESSES = {
+     ENERGY_SYSTEM: 'your-energy-system-contract-address',
+     ENERGY_TOKEN: 'your-energy-token-contract-address'
+   };
+   ```
+
+Start the frontend development server:
+
+```bash
+npm start
+```
+
+This will launch the application at http://localhost:3000
+
+### Step 7: Interact with Deployed Contracts
 
 Interact with the deployed contracts to demonstrate functionality:
 
@@ -82,7 +111,7 @@ This will:
 - Award tokens to a node operator
 - Retrieve and display contract data
 
-### Step 7: Run Tests
+### Step 8: Run Tests
 
 Run the test suite to verify contract functionality:
 
@@ -90,7 +119,7 @@ Run the test suite to verify contract functionality:
 ./scripts/run_tests.sh
 ```
 
-### Step 8: Run the Complete Demo
+### Step 9: Run the Complete Demo
 
 For a full demonstration, run the demo script:
 
@@ -98,7 +127,18 @@ For a full demonstration, run the demo script:
 ./scripts/run_demo.sh
 ```
 
-This script automates steps 3-6 in sequence.
+This script automates steps 3-7 in sequence.
+
+### Step 10: Build the Frontend for Production
+
+To create a production build of the frontend:
+
+```bash
+cd frontend
+npm run build
+```
+
+The build files will be created in the `frontend/build` directory and can be deployed to any static hosting service.
 
 ## HPC Deployment
 
@@ -349,6 +389,45 @@ cat blockchain-energy-*.out
 cat hpc_benchmark_results.json
 ```
 
+## Frontend Deployment Options
+
+The frontend can be deployed in several ways:
+
+### Option 1: Static Hosting
+
+Deploy the contents of the `frontend/build` directory to any static hosting service:
+
+1. **GitHub Pages**:
+   ```bash
+   cd frontend
+   npm install -g gh-pages
+   npm run build
+   gh-pages -d build
+   ```
+
+2. **Netlify**:
+   - Create a new site from the Netlify dashboard
+   - Drag and drop the `build` folder or connect to your GitHub repository
+
+3. **Vercel**:
+   - Install Vercel CLI: `npm install -g vercel`
+   - Deploy: `vercel`
+
+4. **AWS S3**:
+   ```bash
+   aws s3 sync frontend/build/ s3://your-bucket-name
+   ```
+
+### Option 2: Serve Locally
+
+Serve the production build locally:
+
+```bash
+cd frontend
+npm install -g serve
+serve -s build
+```
+
 ## Comparing Laptop and HPC Performance
 
 After running the system on both laptop and HPC environments, you can compare performance metrics:
@@ -357,6 +436,7 @@ After running the system on both laptop and HPC environments, you can compare pe
 2. **ML Model Training Time**: HPC should train models faster, especially with larger datasets
 3. **Prediction Accuracy**: HPC may achieve better accuracy with more complex models
 4. **Gas Optimization**: Compare gas costs between environments
+5. **Dashboard Responsiveness**: Compare frontend performance with different data volumes
 
 Create a comparison report using the benchmark results from both environments to demonstrate the benefits of HPC resources for your thesis project.
 
@@ -367,6 +447,7 @@ Create a comparison report using the benchmark results from both environments to
 - **Ganache Connection Issues**: Ensure Ganache is running and listening on port 8545
 - **Truffle Migration Failures**: Check that Ganache has sufficient funds in the deployment account
 - **Python Environment Issues**: Verify that all dependencies are installed in the virtual environment
+- **Wallet Connection Problems**: Ensure MetaMask is connected to the correct network
 
 ### HPC Environment
 
@@ -375,11 +456,17 @@ Create a comparison report using the benchmark results from both environments to
 - **Out of Memory Errors**: Increase memory allocation in the job submission script
 - **GPU Availability**: Ensure GPUs are available in the requested partition
 
+### Frontend Issues
+
+- **Contract Connection Errors**: Verify contract addresses are correctly configured
+- **Visualization Problems**: Check browser console for detailed error messages
+- **Wallet Integration Issues**: Ensure your wallet is properly connected and on the correct network
+
 ## Next Steps
 
 After successful deployment in both environments, consider:
 
 1. Implementing the full zk-SNARK verification logic
 2. Enhancing the ML model with real data center data
-3. Developing the React.js frontend for visualization
+3. Expanding the dashboard with additional visualizations
 4. Integrating with actual Chainlink oracles on a testnet
