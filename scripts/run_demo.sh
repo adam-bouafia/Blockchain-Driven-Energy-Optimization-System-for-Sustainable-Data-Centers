@@ -23,6 +23,11 @@ echo "Running ML component..."
 echo "Interacting with contracts..."
 truffle exec scripts/interact_with_contracts.js
 
+# Start frontend in a new terminal window
+echo "Starting frontend..."
+gnome-terminal -- ./scripts/start_frontend.sh &
+echo "Frontend will be available at http://localhost:3000"
+
 echo "=================================================="
 echo "Demo completed successfully!"
-echo "To stop the local blockchain, close the terminal window or press Ctrl+C"
+echo "To stop the local blockchain and frontend, close the terminal windows or press Ctrl+C"

@@ -2,6 +2,23 @@
 
 This document provides detailed instructions for deploying the Blockchain-Based Energy Optimization System in both laptop and HPC environments.
 
+## Quick Start
+
+The system now features a simplified setup and deployment process:
+
+1. **Setup the environment**:
+   ```bash
+   chmod +x setup_local_environment.sh
+   ./setup_local_environment.sh
+   ```
+   This script sets up everything: blockchain, ML components with Python 3.12, and the frontend.
+
+2. **Run the demo**:
+   ```bash
+   ./scripts/run_demo.sh
+   ```
+   This launches all components: local blockchain, smart contracts, ML predictions, and the frontend dashboard.
+
 ## Laptop Deployment
 
 ### Prerequisites
@@ -9,16 +26,16 @@ This document provides detailed instructions for deploying the Blockchain-Based 
 - **Operating System**: Linux, macOS, or Windows with WSL
 - **Node.js**: v16.0.0 or higher
 - **npm**: v8.0.0 or higher
-- **Python**: v3.8 or higher
+- **Python**: v3.12
 - **Git**: Latest version
 - **MetaMask**: Browser extension for Ethereum wallet
 
 ### Step 1: Clone the Repository
 
-```bash
-git clone https://github.com/adam-bouafia/Blockchain-Driven-Energy-Optimization-System-for-Sustainable-Data-Centers.git
-cd blockchain-energy-optimization
-```
+   ```bash
+   git clone https://github.com/adam-bouafia/Blockchain-Driven-Energy-Optimization-System-for-Sustainable-Data-Centers.git
+   cd Blockchain-Driven-Energy-Optimization-System-for-Sustainable-Data-Centers
+   ```
 
 ### Step 2: Set Up the Environment
 
@@ -33,8 +50,9 @@ This script will:
 - Install global dependencies (Truffle, Ganache CLI)
 - Install project dependencies
 - Create a `.env` file with default values
-- Set up the Python virtual environment for ML components
+- Set up the Python 3.12 environment for ML components
 - Create necessary scripts for running the system
+- Configure the frontend components
 
 ### Step 3: Start the Local Blockchain
 
@@ -70,33 +88,18 @@ This will:
 - Prepare blockchain-ready data
 - Generate a visualization of the predictions
 
-### Step 6: Set Up the Frontend
+### Step 6: Start the Frontend
 
-Navigate to the frontend directory and install dependencies:
-
-```bash
-cd frontend
-npm install
-```
-
-Update the contract addresses in the frontend configuration:
-
-1. Open `src/utils/contractService.js`
-2. Update the `CONTRACT_ADDRESSES` object with your deployed contract addresses:
-   ```javascript
-   const CONTRACT_ADDRESSES = {
-     ENERGY_SYSTEM: 'your-energy-system-contract-address',
-     ENERGY_TOKEN: 'your-energy-token-contract-address'
-   };
-   ```
-
-Start the frontend development server:
+Launch the frontend dashboard:
 
 ```bash
-npm start
+./scripts/start_frontend.sh
 ```
 
-This will launch the application at http://localhost:3000
+This will:
+- Install frontend dependencies if needed
+- Start the React development server
+- Open the dashboard at http://localhost:3000
 
 ### Step 7: Interact with Deployed Contracts
 
@@ -127,7 +130,7 @@ For a full demonstration, run the demo script:
 ./scripts/run_demo.sh
 ```
 
-This script automates steps 3-7 in sequence.
+This script automates steps 3-7 in sequence, launching all components in separate terminal windows.
 
 ### Step 10: Build the Frontend for Production
 
@@ -146,7 +149,7 @@ The build files will be created in the `frontend/build` directory and can be dep
 
 - Access to university HPC resources
 - SSH access to the HPC cluster
-- Python modules: TensorFlow, NumPy, Pandas, Matplotlib
+- Python 3.12 modules: TensorFlow, NumPy, Pandas, Matplotlib
 - Node.js and npm installed on the HPC (or available as modules)
 
 ### Step 1: Prepare the Code for HPC
@@ -201,7 +204,7 @@ cat > setup_hpc_environment.sh << 'EOL'
 #!/bin/bash
 
 # Load required modules (adjust based on your HPC's available modules)
-module load python/3.8
+module load python/3.12
 module load nodejs/16
 module load cuda/11.7
 
@@ -209,8 +212,8 @@ module load cuda/11.7
 npm install
 
 # Set up Python environment
-python -m venv venv
-source venv/bin/activate
+python3.12 -m venv venv312
+source venv312/bin/activate
 pip install -r ml/requirements.txt
 deactivate
 
@@ -240,16 +243,16 @@ cat > submit_hpc_job.sh << 'EOL'
 #SBATCH --mem=16G
 
 # Load required modules
-module load python/3.8
+module load python/3.12
 module load nodejs/16
 module load cuda/11.7
 
 # Activate Python environment
-source venv/bin/activate
+source venv312/bin/activate
 
 # Run ML component with increased dataset size
 cd ml/profiler
-python energy_predictor.py --nodes=10 --days=90 --hpc=true
+python3.12 energy_predictor.py --nodes=10 --days=90 --hpc=true
 
 # Deploy contracts to HPC network
 cd ../..
@@ -446,7 +449,7 @@ Create a comparison report using the benchmark results from both environments to
 
 - **Ganache Connection Issues**: Ensure Ganache is running and listening on port 8545
 - **Truffle Migration Failures**: Check that Ganache has sufficient funds in the deployment account
-- **Python Environment Issues**: Verify that all dependencies are installed in the virtual environment
+- **Python Environment Issues**: Verify that Python 3.12 is installed and the virtual environment is correctly set up
 - **Wallet Connection Problems**: Ensure MetaMask is connected to the correct network
 
 ### HPC Environment

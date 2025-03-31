@@ -41,23 +41,38 @@ blockchain-energy-optimization/
 └── scripts/                 # Utility scripts
 ```
 
-## Getting Started
+## Quick Start
 
-### Prerequisites
+The project now features a simplified setup and demo process:
+
+1. **Setup the environment**:
+   ```bash
+   chmod +x setup_local_environment.sh
+   ./setup_local_environment.sh
+   ```
+   This script sets up everything: blockchain, ML components with Python 3.12, and the frontend.
+
+2. **Run the demo**:
+   ```bash
+   ./scripts/run_demo.sh
+   ```
+   This launches all components: local blockchain, smart contracts, ML predictions, and the frontend dashboard.
+
+## Prerequisites
 
 - Node.js (v16+)
 - npm (v8+)
-- Python 3.8+ (Python 3.12 recommended for best compatibility)
-- Truffle Suite
-- Ganache CLI
+- Python 3.12
 - MetaMask or other Web3 wallet for blockchain interaction
 
-### Installation
+## Detailed Installation
+
+If you prefer to set up components individually:
 
 1. Clone the repository:
    ```bash
    git clone https://github.com/adam-bouafia/Blockchain-Driven-Energy-Optimization-System-for-Sustainable-Data-Centers.git
-   cd blockchain-energy-optimization
+   cd Blockchain-Driven-Energy-Optimization-System-for-Sustainable-Data-Centers
    ```
 
 2. Install JavaScript dependencies:
@@ -68,53 +83,35 @@ blockchain-energy-optimization/
 3. Set up Python environment:
    ```bash
    cd ml
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   python3.12 -m venv venv312
+   source venv312/bin/activate
    pip install -r requirements.txt
    cd ..
    ```
 
 4. Start local blockchain:
    ```bash
-   ganache-cli
+   ./scripts/start_local_blockchain.sh
    ```
 
-5. Compile and deploy contracts:
+5. Deploy contracts:
    ```bash
-   truffle compile
-   truffle migrate --network development
+   ./scripts/deploy_contracts.sh
    ```
 
-6. Run tests:
+6. Run ML component:
    ```bash
-   truffle test
+   ./scripts/run_ml_component.sh
    ```
 
-7. Set up the frontend:
+7. Start the frontend:
    ```bash
-   cd frontend
-   npm install
+   ./scripts/start_frontend.sh
    ```
-
-8. Start the frontend development server:
-   ```bash
-   npm start
-   ```
-
-9. Alternatively, run the demo script (recommended):
-   ```bash
-   ./scripts/run_demo.sh
-   ```
-   This script will:
-   - Start a local blockchain
-   - Deploy all contracts
-   - Set up the Python environment if needed
-   - Run the ML component
-   - Interact with the contracts
 
 ## Python 3.12 Compatibility
 
-This project supports Python 3.12 with the following features:
+This project is optimized for Python 3.12 with the following features:
 
 1. **Automatic Environment Setup**:
    ```bash
@@ -126,9 +123,9 @@ This project supports Python 3.12 with the following features:
 
 2. **Self-contained ML Component**:
    The `run_ml_component.sh` script automatically:
-   - Creates a Python 3.12 virtual environment if it doesn't exist
-   - Installs all required dependencies
-   - Runs the ML component with the correct environment
+   - Uses the Python 3.12 virtual environment
+   - Runs the ML component with the correct Python version
+   - Handles all dependencies
 
 3. **Compatible Package Versions**:
    - numpy==1.26.4
@@ -183,3 +180,8 @@ For HPC deployment, additional configuration is provided in the `scripts/hpc_dep
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Prof. Klervie Toczé, Vrije Universiteit Amsterdam
+- Green Lab HPC resources

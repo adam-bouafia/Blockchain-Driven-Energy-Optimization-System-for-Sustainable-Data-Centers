@@ -23,9 +23,9 @@ if ! command -v npm &> /dev/null; then
     exit 1
 fi
 
-# Check for Python
-if ! command -v python3 &> /dev/null; then
-    echo "Python 3 is not installed. Please install Python 3.8 or higher."
+# Check for Python 3.12
+if ! command -v python3.12 &> /dev/null; then
+    echo "Python 3.12 is not installed. Please install Python 3.12."
     exit 1
 fi
 
@@ -55,8 +55,8 @@ EOL
 # Set up Python environment for ML components
 echo "Setting up Python environment for ML components..."
 cd ml
-python3.12 -m venv venv
-source venv/bin/activate
+python3.12 -m venv venv312
+source venv312/bin/activate
 pip install -r requirements.txt
 deactivate
 cd ..
@@ -64,13 +64,12 @@ cd ..
 # Create requirements.txt for ML components
 echo "Creating requirements.txt for ML components..."
 cat > ml/requirements.txt << EOL
-tensorflow==2.11.0
-tensorflow-lite==2.11.0
-tflite-runtime==2.11.0
-numpy==1.23.5
-pandas==1.5.3
-matplotlib==3.7.1
-web3==6.0.0
+numpy==1.26.4
+tensorflow==2.19.0
+pandas==2.2.1
+scikit-learn==1.4.2
+matplotlib==3.8.3
+web3==6.15.1
 EOL
 
 # Create sample ML profiler script
@@ -349,14 +348,41 @@ cat > scripts/run_ml_component.sh << EOL
 # Run the ML component
 echo "Running ML energy predictor..."
 cd ml
-source venv/bin/activate
-python profiler/energy_predictor.py
+source venv312/bin/activate
+python3.12 profiler/energy_predictor.py
 deactivate
 cd ..
 
 echo "ML component completed!"
 EOL
 chmod +x scripts/run_ml_component.sh
+
+# Create a script to start the frontend
+echo "Creating script to start the frontend..."
+cat > scripts/start_frontend.sh << EOL
+#!/bin/bash
+
+# Exit on error
+set -e
+
+echo "Starting Frontend for Blockchain Energy Optimization System"
+echo "=========================================================="
+
+# Navigate to frontend directory
+cd "\$(dirname "\$0")/../frontend"
+
+# Check if node_modules exists, if not install dependencies
+if [ ! -d "node_modules" ]; then
+  echo "Installing frontend dependencies..."
+  npm install
+fi
+
+# Start the frontend in development mode
+echo "Starting frontend development server..."
+echo "Open http://localhost:3000 in your browser"
+npm start
+EOL
+chmod +x scripts/start_frontend.sh
 
 # Create a demo script that runs all components
 echo "Creating demo script..."
@@ -386,11 +412,15 @@ echo "Running ML component..."
 echo "Interacting with contracts..."
 truffle exec scripts/interact_with_contracts.js
 
+# Start frontend in a new terminal window
+echo "Starting frontend..."
+gnome-terminal -- ./scripts/start_frontend.sh &
+echo "Frontend will be available at http://localhost:3000"
+
 echo "=================================================="
 echo "Demo completed successfully!"
-echo "To stop the local blockchain, close the terminal window or press Ctrl+C"
+echo "To stop the local blockchain and frontend, close the terminal windows or press Ctrl+C"
 EOL
 chmod +x scripts/run_demo.sh
 
 echo "Local testing environment setup completed successfully!"
-echo "To run the demo, execute: ./scripts/run_demo.sh"
